@@ -58,7 +58,13 @@ export default {
     excluirFilme(filme) {
       const indice = this.filmes.findIndex((item) => item.id === filme.id);
       if (indice > -1) {
-        this.filmes.splice(indice, 1);
+        this.service.excluir(filme.id).then((result) => {
+          if (result.status === 200) {
+            this.filmes.splice(indice, 1);
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
       }
     }
   }

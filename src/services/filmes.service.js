@@ -16,4 +16,8 @@ export default class FilmesService {
 
     return this.request.put(`filmes/${id}.json`, filme);
   }
+
+  excluir(id) {
+    return this.request.delete(`filmes/${id}.json`);
+  }
 }
