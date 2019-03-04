@@ -1,23 +1,40 @@
 <template>
   <div>
     <div class="lista-filmes">
-      <Movie v-for="(filme, index) in filmes" :key="index" :filme="filme"></Movie>
+      <Movie @onExcluir="excluirFilme" v-for="(filme, index) in filmes" :key="index" :filme="filme"></Movie>
     </div>
+
+    <hr>
+    <Form @onCriarFilme="criarFilme"></Form>
   </div>
 </template>
 
 <script>
 import Movie from '@/components/movies/Movie.vue';
+import Form from '@/components/movies/Form.vue'
 
 export default {
   name: 'MovieList',
   components: {
-    Movie
+    Movie,
+    Form
+  },
+  methods: {
+    criarFilme(filme) {
+      this.filmes.push(filme);
+    },
+    excluirFilme(filme) {
+      const indice = this.filmes.findIndex((item) => item.id === filme.id);
+      if (indice > -1) {
+        this.filmes.splice(indice, 1);
+      }
+    }
   },
   data() {
     return {
       filmes: [
         {
+          id: Date.now().toString(),
           titulo: 'Feliz aniversario de Namoro',
           ano: '2019',
           produtora: 'Restaurando do INPE/Hocus',
