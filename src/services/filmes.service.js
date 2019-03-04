@@ -6,7 +6,14 @@ export default class FilmesService {
     this.request = HTTP;
   }
 
-  get filmes() {
+  get buscar() {
     return this.request.get('filmes.json');
+  }
+
+  inserir(filme) {
+    const id = filme.id;
+    delete filme.id;
+
+    return this.request.put(`filmes/${id}.json`, filme);
   }
 }

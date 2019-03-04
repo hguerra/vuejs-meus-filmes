@@ -21,15 +21,9 @@ export default {
     Movie,
     Form
   },
-  methods: {
-    criarFilme(filme) {
-      this.filmes.push(filme);
-    },
-    excluirFilme(filme) {
-      const indice = this.filmes.findIndex((item) => item.id === filme.id);
-      if (indice > -1) {
-        this.filmes.splice(indice, 1);
-      }
+  data() {
+    return {
+      filmes: []
     }
   },
   computed: {
@@ -37,13 +31,8 @@ export default {
       return new FilmesService();
     }
   },
-  data() {
-    return {
-      filmes: []
-    }
-  },
   mounted() {
-    this.service.filmes.then((result) => {
+    this.service.buscar.then((result) => {
       const jsonFilmes = result.data;
 
       for(let chave in jsonFilmes) {
@@ -55,6 +44,23 @@ export default {
     }).catch((err) => {
       console.error(err);
     });
+  },
+  methods: {
+    criarFilme(filme) {
+      this.service.inserir(filme).then((result) => {
+        if (result.status === 200) {
+          this.filmes.push(filme);
+        }
+      }).catch((err) => {
+        console.error(err);
+      });
+    },
+    excluirFilme(filme) {
+      const indice = this.filmes.findIndex((item) => item.id === filme.id);
+      if (indice > -1) {
+        this.filmes.splice(indice, 1);
+      }
+    }
   }
 };
 </script>
