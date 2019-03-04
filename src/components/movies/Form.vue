@@ -3,23 +3,23 @@
     <h1>Adicionar Filme</h1>
     <div class="form-campo">
       <label for="titulo">Título</label>
-      <input type="text" id="titulo" name="titulo" v-model="titulo">
+      <input type="text" id="titulo" name="titulo" v-model="titulo" required>
     </div>
     <div class="form-campo pequeno">
       <label for="ano">Ano de Lançamento</label>
-      <input type="number" id="ano" name="ano" v-model="ano">
+      <input type="number" id="ano" name="ano" v-model="ano" required>
     </div>
     <div class="form-campo medio">
       <label for="produtora">Produtora</label>
-      <input type="text" id="produtora" name="produtora" v-model="produtora">
+      <input type="text" id="produtora" name="produtora" v-model="produtora" required>
     </div>
     <div class="form-campo">
       <label for="cartaz">Url do Cartaz</label>
-      <input type="text" id="cartaz" name="cartaz" v-model="cartaz">
+      <input type="text" id="cartaz" name="cartaz" v-model="cartaz" required>
     </div>
     <div class="form-campo">
       <label for="sinopse">Sinópse</label>
-      <textarea id="sinopse" name="sinopse" rows="5" v-model="sinopse"></textarea>
+      <textarea id="sinopse" name="sinopse" rows="5" v-model="sinopse" required></textarea>
     </div>
 
     <footer>
@@ -44,6 +44,10 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
+
+      if (this.titulo === '' || this.ano === '' || this.produtora === '' || this.sinopse === '') {
+        return;
+      }
 
       const filme = {
         id: Date.now().toString(),
